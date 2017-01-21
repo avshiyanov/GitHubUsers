@@ -27,7 +27,8 @@ class UserViewCell: UITableViewCell {
         loginLabel.text = viewModel.login
         profileLinkLabel.text = viewModel.profileURL
         if let avatarURL = URL(string: viewModel.avatarURL) {
-            avatarImageView.af_setImage(withURL: avatarURL)
+            let filter = AspectScaledToFillSizeFilter(size: avatarImageView.frame.size)
+            avatarImageView.af_setImage(withURL: avatarURL, filter: filter)
         }
     }
     
