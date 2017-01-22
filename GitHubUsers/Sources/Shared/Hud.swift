@@ -1,5 +1,5 @@
 //
-//  UIViewContoller+Extension.swift
+//  HUD.swift
 //  GitHubUsers
 //
 //  Created by Artem Shyianov on 1/21/17.
@@ -18,6 +18,7 @@ class HUD {
     
     class func show(error: Error) {
         let errorView =  PKHUDErrorView(subtitle: error.localizedDescription)
+        HUD.hide()
         PKHUD.sharedHUD.contentView = errorView
         PKHUD.sharedHUD.show()
     }

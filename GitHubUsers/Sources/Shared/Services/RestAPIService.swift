@@ -1,6 +1,6 @@
 //
 //  RestAPIService.swift
-//  GitHubUsersTest
+//  GitHubUsers
 //
 //  Created by Artem Shyianov on 1/21/17.
 //  Copyright © 2017 Artem Shyianov. All rights reserved.
@@ -14,10 +14,13 @@ import SwiftyJSON
 import SystemConfiguration
 
 public struct RestAPIService {
+
     //MARK: - Dependecies
     
     public struct Constants {
-        static let baseAPIURL = "https://api.github.com/"
+        static let baseAPIURL   = "https://api.github.com/"
+        static let clientId     = "c194ccbb171abd92c67e"
+        static let secretCode   = "0e0e6422d6f18cfaf1cdf853ecbfb129d410cde0"
     }
     
     enum APIError: Error {
@@ -39,8 +42,11 @@ public struct RestAPIService {
                                                    with: "\(page)")
         urlString = urlString.replacingOccurrences(of: "{count}",
                                                    with: "\(count)")
+        let params = ["client_id": Constants.clientId,
+                      "client_secret": Constants.secretCode]
+            
         if let url = URL(string: urlString) {
-                return json(.get, url).flatMap({
+                return json(.get, url, parameters: params).flatMap({
                     (result) -> Observable<[GitHubUser]> in
                     guard let array = result as? [Any] else {
                         return Observable.error(APIError.cannotParse)
@@ -59,8 +65,11 @@ public struct RestAPIService {
     }
     
     func getFollowers(urlString: String) -> Observable<[GitHubUser]> {
+        let params = ["client_id": Constants.clientId,
+                      "client_secret": Constants.secretCode]
+        
         if let url = URL(string: urlString) {
-            return json(.get, url).flatMap({
+            return json(.get, url, parameters: params).flatMap({
                 (result) -> Observable<[GitHubUser]> in
                 guard let array = result as? [Any] else {
                     return Observable.error(APIError.cannotParse)

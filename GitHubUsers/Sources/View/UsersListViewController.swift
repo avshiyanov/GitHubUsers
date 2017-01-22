@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  UsersListViewController.swift
 //  GitHubUsersTest
 //
 //  Created by Artem Shyianov on 1/21/17.
@@ -35,7 +35,7 @@ class UsersListViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let followersVC = segue.destination as? FollowersListViewController
         if let indexPath = tableView.indexPathForSelectedRow {
-            followersVC?.user = viewModel.users.value[indexPath.row]
+            followersVC?.user = try? tableView.rx.model(at: indexPath)
         }
     }
 

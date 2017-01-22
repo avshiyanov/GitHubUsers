@@ -1,5 +1,5 @@
 //
-//  FollowersViewModel.swift
+//  FollowerViewModel.swift
 //  GitHubUsers
 //
 //  Created by Artem Shyianov on 1/21/17.
@@ -19,20 +19,19 @@ final class FollowerViewModel {
     
     //MARK: - Model
     
-    var followers = Variable([GitHubUser]())
+    let followers: Observable<[GitHubUser]>
 
     //MARK: - Set up
     
     init(githubService: RestAPIService, followersUrl: String) {
         self.restAPIService = githubService
         HUD.show()
-        let _ = self.restAPIService.getFollowers(urlString: followersUrl)
-            .subscribe(onNext: { (result) in
-                self.followers.value = result
-                HUD.hide()
-            }, onError: { (error) in
-                HUD.hide()
-                HUD.show(error: error)
+        self.followers = self.restAPIService.getFollowers(urlString: followersUrl)
+        let _ = self.followers.subscribe(onNext: { (result) in
+        }, onError: { (error) in
+            HUD.show(error: error)
+        }, onCompleted: {
+            HUD.hide()
         })
     }
 }

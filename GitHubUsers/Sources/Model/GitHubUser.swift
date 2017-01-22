@@ -1,5 +1,5 @@
 //
-//  TravelModel.swift
+//  GitHubUser.swift
 //  GitHubUsersSample
 //
 //  Created by Artem Shyianov on 1/21/17.

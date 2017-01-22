@@ -1,5 +1,5 @@
 //
-//  TravelViewModel.swift
+//  UserViewModel.swift
 //  GitHubUsersSample
 //
 //  Created by Artem Shyianov on 1/21/17.
@@ -18,20 +18,19 @@ final class UserViewModel {
     
     //MARK: - Model
     
-    var users = Variable([GitHubUser]())
+    let users: Observable<[GitHubUser]>
     
     //MARK: - Set up
     
     init(githubService: RestAPIService) {
         self.restAPIService = githubService
         HUD.show()
-        let _ = self.restAPIService.getUsers(page: 0, count: 100)
-            .subscribe(onNext: { (result) in
-                HUD.hide()
-                self.users.value = result
-            }, onError: { (error) in
-                HUD.hide()
-                HUD.show(error: error)
+        self.users = self.restAPIService.getUsers(page: 0, count: 100)
+        let _ = self.users.subscribe(onNext: { (result) in
+        }, onError: { (error) in
+            HUD.show(error: error)
+        }, onCompleted: { 
+            HUD.hide()
         })
     }
     

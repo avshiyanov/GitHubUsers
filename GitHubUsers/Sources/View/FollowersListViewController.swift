@@ -1,5 +1,5 @@
 //
-//  FolloverListViewController.swift
+//  FollowersListViewController.swift
 //  GitHubUsers
 //
 //  Created by Artem Shyianov on 1/21/17.
