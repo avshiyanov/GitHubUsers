@@ -12,6 +12,7 @@
 		AAF6D76FFB6F240A8413A755 /* Pods_GoEuroTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3DED5F8109A3C72F2A2D216 /* Pods_GoEuroTests.framework */; };
 		D6E75D2C4160C2FE826E8975 /* Pods_GoEuroUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C16C6B0800F08CC96330DBEC /* Pods_GoEuroUITests.framework */; };
 		D9075043FF11AD9752F036E1 /* Pods_GitHubUsers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F4ADE73AF197432E053E861 /* Pods_GitHubUsers.framework */; };
+		E31256A01E58523700B58A51 /* ListPaginator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E312569F1E58523700B58A51 /* ListPaginator.swift */; };
 		E36ABF8C1E33DAD20042E132 /* FollowerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E36ABF8B1E33DAD20042E132 /* FollowerViewModel.swift */; };
 		E36ABF8E1E33DD230042E132 /* FollowersListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E36ABF8D1E33DD230042E132 /* FollowersListViewController.swift */; };
 		E36ABF911E33E2C30042E132 /* Hud.swift in Sources */ = {isa = PBXBuildFile; fileRef = E36ABF901E33E2C30042E132 /* Hud.swift */; };
@@ -59,6 +60,7 @@
 		C217C12BCD7C80509FF468AA /* Pods_GoEuro.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GoEuro.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9A1DF0B8963FD31D0E0F091 /* Pods-GitHubUsers.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GitHubUsers.release.xcconfig"; path = "Pods/Target Support Files/Pods-GitHubUsers/Pods-GitHubUsers.release.xcconfig"; sourceTree = "<group>"; };
 		DF68D33D3D1D85090A130710 /* Pods-GitHubUsers.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GitHubUsers.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GitHubUsers/Pods-GitHubUsers.debug.xcconfig"; sourceTree = "<group>"; };
+		E312569F1E58523700B58A51 /* ListPaginator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListPaginator.swift; sourceTree = "<group>"; };
 		E36ABF831E33BDD80042E132 /* Pods_GitHubUsersTests.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_GitHubUsersTests.framework; path = "Pods/../build/Debug-iphoneos/Pods_GitHubUsersTests.framework"; sourceTree = "<group>"; };
 		E36ABF841E33BDD80042E132 /* Pods_GitHubUsersUITests.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_GitHubUsersUITests.framework; path = "Pods/../build/Debug-iphoneos/Pods_GitHubUsersUITests.framework"; sourceTree = "<group>"; };
 		E36ABF8B1E33DAD20042E132 /* FollowerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowerViewModel.swift; sourceTree = "<group>"; };
@@ -196,6 +198,7 @@
 			isa = PBXGroup;
 			children = (
 				E3C3A5CD1E2EA84700760A33 /* GitHubUser.swift */,
+				E312569F1E58523700B58A51 /* ListPaginator.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -213,8 +216,8 @@
 		E3C3A5E11E2EA8B300760A33 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				E36ABF8B1E33DAD20042E132 /* FollowerViewModel.swift */,
 				E3C3A5D11E2EA84700760A33 /* UserViewModel.swift */,
+				E36ABF8B1E33DAD20042E132 /* FollowerViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -545,6 +548,7 @@
 				E3C3A5D61E2EA84700760A33 /* RestAPIService.swift in Sources */,
 				E3C3A59A1E2EA80C00760A33 /* UsersListViewController.swift in Sources */,
 				E3C3A5DA1E2EA84700760A33 /* UserViewCell.swift in Sources */,
+				E31256A01E58523700B58A51 /* ListPaginator.swift in Sources */,
 				E36ABF911E33E2C30042E132 /* Hud.swift in Sources */,
 				E36ABF8C1E33DAD20042E132 /* FollowerViewModel.swift in Sources */,
 				E3C3A5D71E2EA84700760A33 /* GitHubUser.swift in Sources */,

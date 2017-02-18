@@ -15,6 +15,7 @@ final class UserViewModel {
     
     private let restAPIService: RestAPIService
     private let disposeBag = DisposeBag()
+    private var listPaginator: ListPaginator = ListPaginator()
     
     //MARK: - Model
     
@@ -22,11 +23,15 @@ final class UserViewModel {
     
     //MARK: - Set up
     
-    init(githubService: RestAPIService) {
+    init(githubService: RestAPIService, loadNextPageTrigger: Observable<Void>) {
         self.restAPIService = githubService
+        self.users = self.restAPIService.getUsers(
+            listPaginator: listPaginator,
+            loadNextPageTrigger: loadNextPageTrigger
+        ).shareReplay(1)
         HUD.show()
-        self.users = self.restAPIService.getUsers(page: 0, count: 100)
         let _ = self.users.subscribe(onNext: { (result) in
+            HUD.hide()
         }, onError: { (error) in
             HUD.show(error: error)
         }, onCompleted: { 

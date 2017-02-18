@@ -13,14 +13,14 @@ struct GitHubUser {
     
     // MARK: - Properties
     
-    let userId: Double
+    let userId: Int64
     let login: String
     let profileURL: String
     let avatarURL: String
     let followersURL: String
     
     init?(json: JSON) {
-        guard let userId = json["id"].double,
+        guard let userId = json["id"].int64,
             let login = json["login"].string,
             let profileURL = json["html_url"].string,
             let avatarURL = json["avatar_url"].string,

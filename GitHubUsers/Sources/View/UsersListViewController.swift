@@ -10,6 +10,8 @@ import UIKit
 import RxSwift
 import RxCocoa
 
+let startLoadingOffset: CGFloat = 20.0
+
 class UsersListViewController: UITableViewController {
 
     //MARK: - Dependencies
@@ -22,13 +24,27 @@ class UsersListViewController: UITableViewController {
             tableView.reloadData()
         }
     }
+    
+    func isNearTheBottomEdge(_ contentOffset: CGPoint, _ tableView: UITableView) -> Bool {
+        let result = contentOffset.y +
+            tableView.bounds.size.height +
+            startLoadingOffset > tableView.contentSize.height
+        return result
+    }
 
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        viewModel = UserViewModel(githubService: RestAPIService())
+        let loadNextPageTrigger = self.tableView.rx.contentOffset
+            .flatMap { offset in
+                self.isNearTheBottomEdge(offset, self.tableView)
+                    ? Observable.just(())
+                    : Observable.empty()
+        }
+        viewModel = UserViewModel(githubService: RestAPIService(),
+                                  loadNextPageTrigger: loadNextPageTrigger)
         addBindsToViewModel(viewModel: viewModel)
     }
     

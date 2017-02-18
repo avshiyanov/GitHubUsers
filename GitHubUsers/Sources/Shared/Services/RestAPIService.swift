@@ -29,42 +29,72 @@ public struct RestAPIService {
     }
     
     enum ResourcePath: String {
-        case users = "users?since={since}&per_page={count}"
+        case users = "users?since={since}&per_page={per_page}"
         
         var path: String {
             return Constants.baseAPIURL + rawValue
         }
     }
 
-    func getUsers(page: Int, count: Int) -> Observable<[GitHubUser]> {
+    func getUsers(listPaginator: ListPaginator,
+                  loadNextPageTrigger: Observable<Void>) -> Observable<[GitHubUser]> {
+        return loadNextUsers([], listPaginator: listPaginator, loadNextPageTrigger: loadNextPageTrigger)
+    }
+
+    func loadNextUsers(_ loadedSoFar: [GitHubUser],
+                       listPaginator: ListPaginator,
+                       loadNextPageTrigger: Observable<Void>) -> Observable<[GitHubUser]> {
         var urlString = ResourcePath.users.path
+        let lastSeen = loadedSoFar.isEmpty ? "" : "\(loadedSoFar.last!.userId)"
+
         urlString = urlString.replacingOccurrences(of: "{since}",
-                                                   with: "\(page)")
-        urlString = urlString.replacingOccurrences(of: "{count}",
-                                                   with: "\(count)")
+                                                   with: lastSeen)
+        urlString = urlString.replacingOccurrences(of: "{per_page}",
+                                                   with: "\(listPaginator.itemsPerPage())")
+        
         let params = ["client_id": Constants.clientId,
                       "client_secret": Constants.secretCode]
-            
+        
         if let url = URL(string: urlString) {
                 return json(.get, url, parameters: params).flatMap({
                     (result) -> Observable<[GitHubUser]> in
+                    print (urlString)
+                    
                     guard let array = result as? [Any] else {
                         return Observable.error(APIError.cannotParse)
                     }
-                    var users:[GitHubUser] = []
+                    var loadedUsers:[GitHubUser] = []
                     for dict in array {
                         if let user = GitHubUser(json: JSON(dict)) {
-                            users.append(user)
+                            loadedUsers.append(user)
                         }
                     }
-                    return Observable.just(users)
+                    
+                    var appendedUsers = loadedSoFar
+                    appendedUsers.append(contentsOf: loadedUsers)
+                    var paginator = listPaginator
+                    
+                    if loadedUsers.isEmpty {
+                        return Observable.just(appendedUsers)
+                    }
+                    
+                    return Observable.concat([
+                        // return loaded immediately
+                        Observable.just(appendedUsers),
+                        // wait until next page can be loaded
+                        Observable.never().takeUntil(loadNextPageTrigger),
+                        // load next page
+                        self.loadNextUsers(appendedUsers,
+                            listPaginator: paginator.increasePage(),
+                            loadNextPageTrigger: loadNextPageTrigger)
+                        ])
                 }).observeOn(MainScheduler.instance)
         } else {
             return Observable.empty()
         }
     }
     
-    func getFollowers(urlString: String) -> Observable<[GitHubUser]> {
+     func getFollowers(urlString: String) -> Observable<[GitHubUser]> {
         let params = ["client_id": Constants.clientId,
                       "client_secret": Constants.secretCode]
         
