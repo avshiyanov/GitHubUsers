@@ -60,12 +60,12 @@ class UsersListViewController: UITableViewController {
     private func addBindsToViewModel(viewModel: UserViewModel) {
         tableView.dataSource = nil
         viewModel.users.asObservable()
-            .bindTo(tableView.rx.items(cellIdentifier: UserCellIdentifier,
+            .bind(to: tableView.rx.items(cellIdentifier: UserCellIdentifier,
                                              cellType: UserViewCell.self)) {
                 (row, element, cell) in
                 cell.configure(viewModel: element)
             }
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     }
 }
 

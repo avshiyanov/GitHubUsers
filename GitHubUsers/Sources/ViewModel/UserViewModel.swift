@@ -28,7 +28,7 @@ final class UserViewModel {
         self.users = self.restAPIService.getUsers(
             listPaginator: listPaginator,
             loadNextPageTrigger: loadNextPageTrigger
-        ).shareReplay(1)
+            ).share(replay:1)
         HUD.show()
         let _ = self.users.subscribe(onNext: { (result) in
             HUD.hide()

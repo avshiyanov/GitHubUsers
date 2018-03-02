@@ -39,11 +39,11 @@ class FollowersListViewController: UITableViewController {
     private func addBindsToViewModel(viewModel: FollowerViewModel) {
         tableView.dataSource = nil
         viewModel.followers.asObservable()
-            .bindTo(tableView.rx.items(cellIdentifier: UserCellIdentifier,
+            .bind(to: tableView.rx.items(cellIdentifier: UserCellIdentifier,
                                        cellType: UserViewCell.self)) {
                                         (row, element, cell) in
                                         cell.configure(viewModel: element)
             }
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     }
 }
